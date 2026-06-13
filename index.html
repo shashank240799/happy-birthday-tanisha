@@ -787,6 +787,87 @@ function openSecret(){
   hint.style.display='none';
   msg.classList.add('open');
 }
+  /* ── CANDLES ── */
+const candlesWrap = document.getElementById("candles-wrap");
+const candlesCount = document.getElementById("candles-count");
+const candlesWish = document.getElementById("candles-wish");
+
+const totalCandles = 25;
+let blownCount = 0;
+
+for (let i = 1; i <= totalCandles; i++) {
+  const candle = document.createElement("div");
+  candle.className = "candle";
+
+  candle.innerHTML = `
+    <div class="flame">🔥</div>
+    <div class="candle-body">🕯️</div>
+  `;
+
+  candle.addEventListener("click", () => {
+    if (candle.classList.contains("blown")) return;
+
+    candle.classList.add("blown");
+    blownCount++;
+
+    const remaining = totalCandles - blownCount;
+
+    if (remaining > 0) {
+      candlesCount.textContent =
+        `${remaining} candle${remaining === 1 ? "" : "s"} still burning ✨`;
+    } else {
+      candlesCount.textContent = "All candles blown out 🎉";
+      candlesWish.classList.add("show");
+      burstConfetti();
+    }
+  });
+
+  candlesWrap.appendChild(candle);
+}
+
+
+/* ── CONFETTI ── */
+function burstConfetti() {
+  const canvas = document.getElementById("confetti-canvas");
+  const ctx = canvas.getContext("2d");
+
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  let pieces = [];
+
+  for (let i = 0; i < 200; i++) {
+    pieces.push({
+      x: canvas.width / 2,
+      y: canvas.height / 2,
+      dx: (Math.random() - 0.5) * 12,
+      dy: Math.random() * -12 - 4,
+      size: Math.random() * 7 + 3,
+      hue: Math.random() * 360
+    });
+  }
+
+  function animate() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+    pieces.forEach(p => {
+      p.x += p.dx;
+      p.y += p.dy;
+      p.dy += 0.15;
+
+      ctx.fillStyle = `hsl(${p.hue},90%,60%)`;
+      ctx.fillRect(p.x, p.y, p.size, p.size);
+    });
+
+    if (pieces.some(p => p.y < canvas.height + 50)) {
+      requestAnimationFrame(animate);
+    } else {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+    }
+  }
+
+  animate();
+}
 </script>
 </body>
 </html>
