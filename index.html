@@ -63,7 +63,6 @@
       transition: transform 0.2s;
     }
     #music-btn:hover { transform: scale(1.08); }
-    #music-btn svg { width: 18px; height: 18px; fill: #fff; }
     #music-btn .note { font-size: 18px; }
 
     /* ── HERO ── */
@@ -225,29 +224,22 @@
     .collage-grid {
       display: grid;
       grid-template-columns: repeat(6, 1fr);
-      grid-template-rows: auto;
       gap: 0.6rem;
     }
-    .c1 { grid-column: 1/4; grid-row: 1/3; }
-    .c2 { grid-column: 4/7; grid-row: 1/2; }
-    .c3 { grid-column: 4/6; grid-row: 2/3; }
-    .c4 { grid-column: 6/7; grid-row: 2/3; }
-    .c5 { grid-column: 1/7; grid-row: 3/4; }
+    .c1 { grid-column: 1/4; grid-row: 1/3; aspect-ratio: 2/2.8; }
+    .c2 { grid-column: 4/7; grid-row: 1/2; aspect-ratio: 3/2; }
+    .c3 { grid-column: 4/6; grid-row: 2/3; aspect-ratio: 2/1.4; }
+    .c4 { grid-column: 6/7; grid-row: 2/3; aspect-ratio: 1/1.4; }
+    .c5 { grid-column: 1/7; grid-row: 3/4; aspect-ratio: 6/2; }
     .collage-cell {
       border-radius: 8px; overflow: hidden;
-      background: var(--rose);
-      position: relative;
+      background: var(--rose); position: relative;
     }
     .collage-cell img {
       width:100%; height:100%; object-fit:cover; display:block;
       transition: transform 0.5s ease;
     }
     .collage-cell:hover img { transform: scale(1.05); }
-    .c1 { aspect-ratio: 2/2.8; }
-    .c2 { aspect-ratio: 3/2; }
-    .c3 { aspect-ratio: 2/1.4; }
-    .c4 { aspect-ratio: 1/1.4; }
-    .c5 { aspect-ratio: 6/2; }
     .collage-cell .caption {
       position: absolute; bottom: 0; left: 0; right: 0;
       background: linear-gradient(transparent, rgba(74,35,80,0.55));
@@ -258,10 +250,7 @@
     .collage-cell:hover .caption { opacity: 1; }
 
     @media(max-width: 500px) {
-      .collage-grid {
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: auto;
-      }
+      .collage-grid { grid-template-columns: 1fr 1fr; }
       .c1 { grid-column:1/2; grid-row:1/2; aspect-ratio:3/4; }
       .c2 { grid-column:2/3; grid-row:1/2; aspect-ratio:3/4; }
       .c3 { grid-column:1/2; grid-row:2/3; aspect-ratio:3/4; }
@@ -314,6 +303,7 @@
       font-size: 3.5rem; cursor: pointer;
       animation: pulse 2s infinite;
       display: inline-block; user-select:none;
+      -webkit-tap-highlight-color: transparent;
     }
     @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
     .secret-hint {
@@ -322,17 +312,13 @@
     }
     .secret-message {
       display: none;
-      background: var(--fill);
-      border-radius: 14px;
-      padding: 2rem 1.5rem;
-      border: 1px solid var(--rose);
-      margin-top: 1.5rem;
+      background: var(--fill); border-radius: 14px;
+      padding: 2rem 1.5rem; border: 1px solid var(--rose); margin-top: 1.5rem;
     }
     .secret-message.open { display: block; animation: fadeUp 0.6s ease forwards; }
     .secret-message p {
       font-family: 'Cormorant Garant', serif;
-      font-size: 1.15rem; line-height: 1.75; color: var(--plum);
-      font-style: italic;
+      font-size: 1.15rem; line-height: 1.75; color: var(--plum); font-style: italic;
     }
 
     /* ── CANDLES ── */
@@ -349,7 +335,7 @@
     }
     .candles-wrap {
       display: flex; flex-wrap: wrap;
-      justify-content: center; gap: 0.6rem;
+      justify-content: center; gap: 0.5rem;
       margin-bottom: 2rem;
     }
     .candle {
@@ -357,18 +343,21 @@
       align-items: center; cursor: pointer;
       user-select: none; transition: transform 0.15s;
       -webkit-tap-highlight-color: transparent;
+      width: 36px;
     }
-    .candle:active { transform: scale(0.92); }
+    .candle:active { transform: scale(0.88); }
     .flame {
-      font-size: 1.5rem; line-height: 1;
+      font-size: 1.4rem; line-height: 1;
       transition: opacity 0.3s, transform 0.3s;
       animation: flicker 1.5s infinite alternate;
       transform-origin: bottom center;
+      display: block;
     }
     .candle.blown .flame {
       opacity: 0; transform: scaleY(0) translateY(4px);
       animation: none;
     }
+    .candle.blown .candle-body { filter: grayscale(1) opacity(0.5); }
     @keyframes flicker {
       0%   { transform: scaleX(1)   scaleY(1)   rotate(-2deg); }
       25%  { transform: scaleX(0.9) scaleY(1.1) rotate(1deg); }
@@ -376,10 +365,13 @@
       75%  { transform: scaleX(0.95) scaleY(1.05) rotate(2deg); }
       100% { transform: scaleX(1)   scaleY(1)   rotate(-1deg); }
     }
-    .candle-body { font-size: 1.6rem; line-height: 1; }
+    /* Each candle gets a slightly different flicker speed */
+    .candle:nth-child(odd)  .flame { animation-duration: 1.2s; }
+    .candle:nth-child(3n)   .flame { animation-duration: 1.8s; }
+    .candle-body { font-size: 1.5rem; line-height: 1; display: block; transition: filter 0.4s; }
     .candle-num {
-      font-size: 0.6rem; letter-spacing: 0.1em;
-      color: var(--mauve); margin-top: 0.15rem;
+      font-size: 0.55rem; letter-spacing: 0.08em;
+      color: var(--mauve); margin-top: 0.1rem; display: block;
     }
     .candles-count {
       font-family:'Cormorant Garant',serif;
@@ -387,6 +379,17 @@
       font-style: italic; min-height: 1.8rem;
       transition: opacity 0.3s;
     }
+    .blow-all-btn {
+      margin-top: 1rem;
+      background: none; border: 1px solid var(--mauve);
+      color: var(--mauve); border-radius: 999px;
+      padding: 0.5rem 1.4rem; font-family: 'Jost', sans-serif;
+      font-size: 0.72rem; letter-spacing: 0.18em; text-transform: uppercase;
+      cursor: pointer; transition: background 0.2s, color 0.2s;
+      display: none;
+    }
+    .blow-all-btn.visible { display: inline-block; }
+    .blow-all-btn:hover { background: var(--mauve); color: #fff; }
     .candles-wish {
       display: none; margin-top: 1.5rem;
       background: var(--fill); border-radius: 14px;
@@ -395,10 +398,9 @@
     .candles-wish.show { display:block; animation: fadeUp 0.7s ease forwards; }
     .candles-wish p {
       font-family:'Cormorant Garant',serif;
-      font-size: 1.2rem; color: var(--plum);
-      font-style: italic; line-height: 1.7;
+      font-size: 1.2rem; color: var(--plum); font-style: italic; line-height: 1.7;
     }
-    .confetti-burst { position:fixed; inset:0; pointer-events:none; z-index:9999; }
+    .confetti-canvas { position:fixed; inset:0; pointer-events:none; z-index:9999; }
 
     /* ── MUSIC SECTION ── */
     #music-section { background: var(--fill); padding: 5rem 1.5rem; text-align: center; }
@@ -439,20 +441,15 @@
 </head>
 <body>
 
-<!-- MUSIC (hidden audio) -->
 <audio id="bg-audio" loop>
-  <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg" />
+  <source src="music.mp3" type="audio/mpeg" />
 </audio>
-
-<!-- Music toast -->
 <div id="music-toast">🎵 Tap anywhere to start the music</div>
-
-<!-- Music toggle button -->
 <button id="music-btn" title="Toggle music" aria-label="Toggle music">
   <span class="note" id="music-icon">🎵</span>
 </button>
 
-<!-- ░░░ HERO ░░░ -->
+<!-- HERO -->
 <section id="hero">
   <canvas id="petals"></canvas>
   <p class="hero-eyebrow">A little something, made just for you</p>
@@ -463,23 +460,24 @@
   <span class="hero-scroll">scroll</span>
 </section>
 
-<!-- ░░░ LETTER ░░░ -->
+<!-- LETTER -->
 <div id="letter">
   <div class="inner">
     <p class="section-label reveal">a letter, from me to you</p>
     <h2 class="letter-heading reveal">Dear Tanisha,</h2>
     <div class="letter-body reveal">
-     <p>Happy Birthday. ❤️ I genuinely wish I was there right now, in person, to tell you that face to face. But since I can't be, I made you this instead.</p>
+      <p>Happy Birthday. ❤️ I genuinely wish I was there right now, in person, to tell you that face to face. But since I can't be, I made you this instead.</p>
       <p>Sometimes I think about how all of this started on November 27th, when you replied to my story. One small reply somehow turned into conversations throughout the day, coffee dates at Enjis, pickleball and badminton dates, avocado toasts, and you making pasta for me. Somewhere along the way, all those little moments started to mean a lot to me.</p>
-      <p>There are so many things I admire about you, Tanisha. The way you show up for the gym even when no one is watching. That quiet consistency says so much about who you are. The way you're fiercely independent and so comfortable being yourself. And the way you show up for the people you care about without hesitation. That's rare, and it's something I notice and appreciate more than you know.</p> <p>Our first trip to Vrindavan on April 3rd, our countless coffee dates at Enjis, and you cooking pasta and sending it to me are the kinds of memories that randomly cross my mind and make me smile.</p>
+      <p>There are so many things I admire about you, Tanisha. The way you show up for the gym even when no one is watching. That quiet consistency says so much about who you are. The way you're fiercely independent and so comfortable being yourself. And the way you show up for the people you care about without hesitation. That's rare, and it's something I notice and appreciate more than you know.</p>
+      <p>Our first trip to Vrindavan on April 3rd, our countless coffee dates at Enjis, and you cooking pasta and sending it to me are the kinds of memories that randomly cross my mind and make me smile.</p>
       <p>I hope today brings you everything you deserve, because you deserve so much happiness, laughter, and love. And selfishly, I just wish I could be there with you today.</p>
       <p>Happy Birthday, Tanisha. ❤️ Thank you for being you. 🎂✨</p>
     </div>
-    <p class="letter-sign reveal">— Shashank</p>
+    <p class="letter-sign reveal">Shashank</p>
   </div>
 </div>
 
-<!-- ░░░ STATS ░░░ -->
+<!-- STATS -->
 <div id="stats">
   <div class="inner">
     <p class="section-label reveal" style="text-align:center;">us, in numbers</p>
@@ -487,82 +485,74 @@
     <div class="stats-grid">
       <div class="stat-card">
         <span class="stat-emoji">💬</span>
-        <span class="stat-num" data-target="212">0</span>
+        <span class="stat-num" data-since="2025-11-27">0</span>
         <span class="stat-label">days of talking</span>
       </div>
       <div class="stat-card">
         <span class="stat-emoji">🤝</span>
-        <span class="stat-num" data-target="200">0</span>
+        <span class="stat-num" data-since="2025-12-09">0</span>
         <span class="stat-label">days since we met</span>
       </div>
       <div class="stat-card">
         <span class="stat-emoji">✋</span>
-        <span class="stat-num" data-target="71">0</span>
+        <span class="stat-num" data-since="2026-04-17">0</span>
         <span class="stat-label">days since you held my hand</span>
       </div>
       <div class="stat-card">
         <span class="stat-emoji">🌸</span>
-        <span class="stat-num" data-target="63">0</span>
+        <span class="stat-num" data-since="2026-04-25">0</span>
         <span class="stat-label">days since our first kiss</span>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ░░░ TIMELINE ░░░ -->
+<!-- TIMELINE -->
 <div id="timeline">
   <div class="inner">
     <p class="section-label reveal">us, in order</p>
     <h2 class="timeline-heading reveal">The moments that made us</h2>
     <div class="tl-track">
-
       <div class="tl-item">
         <p class="tl-date">27 November 2025</p>
         <p class="tl-title">She Replied to a Story ✨</p>
         <p class="tl-desc">One notification. One tiny reply. And somehow, everything changed. Some of the biggest things in life begin with the smallest gestures.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">9 December 2025</p>
         <p class="tl-title">The Day We Met 🤍</p>
-        <p class="tl-desc">From screens to sharing Tres Leches together at Magnolia, we somehow turned small moments into beautiful memories. And the first time I met you in person, I knew this was never going to be just another story.</p>
+        <p class="tl-desc">From screens to sharing Tres Leches together at Magnolia, we somehow turned small moments into beautiful memories. The first time I met you in person, I knew this was never going to be just another story.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">3 April 2026</p>
         <p class="tl-title">Our First Trip to Vrindavan 🛕</p>
-        <p class="tl-desc">Our first trip together took us to Vrindavan — of all places. Peaceful, golden, and beautiful in its own way. It gave us a whole new kind of memory, one I'll cherish forever.</p>
+        <p class="tl-desc">Our first trip together took us to Vrindavan, of all places. Peaceful, golden, and beautiful in its own way. It gave us a whole new kind of memory, one I'll cherish forever.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">17 April 2026</p>
         <p class="tl-title">First Time Holding Hands 🤝</p>
         <p class="tl-desc">A small thing that felt enormous. Your hand in mine. The world got a little quieter and a little better all at once.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">25 April 2026</p>
         <p class="tl-title">Our First Kiss 🌸</p>
         <p class="tl-desc">Some moments you want to freeze forever. This was one of them.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">Always</p>
         <p class="tl-title">Coffee at Enjis, Pasta & Avocado Toasts ☕</p>
-        <p class="tl-desc">The ordinary things that somehow became my favourite things , just because they're with you.</p>
+        <p class="tl-desc">The ordinary things that somehow became my favourite things, just because they're with you.</p>
       </div>
-
       <div class="tl-item">
         <p class="tl-date">27 June 2026</p>
-        <p class="tl-title">Today — Your Birthday 🎂</p>
+        <p class="tl-title">Today. Your Birthday 🎂</p>
         <p class="tl-desc">Far apart, but never really. Happy birthday, Tanisha. I'm so glad you exist.</p>
       </div>
-
     </div>
   </div>
 </div>
 
-<!-- ░░░ COLLAGE ░░░ -->
+<!-- COLLAGE -->
 <div id="collage">
   <div class="inner">
     <h2 class="collage-heading reveal">You, in pictures</h2>
@@ -592,7 +582,7 @@
   </div>
 </div>
 
-<!-- ░░░ REASONS ░░░ -->
+<!-- REASONS -->
 <div id="reasons">
   <div class="inner">
     <p class="section-label reveal" style="text-align:center;">just a few things</p>
@@ -600,73 +590,78 @@
     <div class="reasons-grid">
       <div class="reason-card">
         <span class="reason-emoji">🏋️‍♀️</span>
-        <p class="reason-text">Her dedication to the gym — that quiet, consistent discipline says everything about who she is</p>
+        <p class="reason-text">Your dedication to the gym. That quiet, consistent discipline says everything about who you are</p>
       </div>
       <div class="reason-card">
         <span class="reason-emoji">👑</span>
-        <p class="reason-text">Your strong, independent personality — she knows exactly who she is and doesn't apologise for it</p>
+        <p class="reason-text">Your strong, independent personality. You know exactly who you are and you don't apologise for it</p>
       </div>
       <div class="reason-card">
-        <span class="reason-emoji">🍝</span>
-        <p class="reason-text">The way you cooks pasta for me  — it means everything</p>
+        <span class="reason-emoji">🤍</span>
+        <p class="reason-text">The way you show up fully for the people who matter to you, without hesitation, every time</p>
       </div>
       <div class="reason-card">
-        <span class="reason-emoji">☕</span>
-        <p class="reason-text">Our coffee dates at Enjis — the ones that stretch longer than they should and neither of us mind</p>
+        <span class="reason-emoji">💌</span>
+        <p class="reason-text">The little things you do for the people you care about. Small gestures that say everything.</p>
       </div>
       <div class="reason-card">
-        <span class="reason-emoji">🥑</span>
-        <p class="reason-text">Making avocado toasts together — the most ordinary thing that somehow became one of my favourites</p>
+        <span class="reason-emoji">🎯</span>
+        <p class="reason-text">How you know exactly what you want and aren't afraid to go after it. That kind of clarity is rare.</p>
+      </div>
+      <div class="reason-card">
+        <span class="reason-emoji">🌱</span>
+        <p class="reason-text">The way you keep growing. Always pushing yourself, never settling, never stopping.</p>
       </div>
     </div>
   </div>
 </div>
 
-<!-- ░░░ SECRET MESSAGE ░░░ -->
+<!-- SECRET MESSAGE -->
 <div id="secret">
   <div class="inner">
-    <p class="section-label reveal">psst —</p>
+    <p class="section-label reveal">psst</p>
     <h2 class="secret-heading reveal">A secret, just for you</h2>
     <p class="secret-sub reveal">Tap the lock to open it 🔒</p>
     <div class="secret-lock" id="lock-emoji" onclick="openSecret()">🔒</div>
     <p class="secret-hint" id="lock-hint">tap to unlock</p>
     <div class="secret-message" id="secret-msg">
-      <p>You know what I keep thinking about? The small things. The way you laugh.The way a random Tuesday with you is better than a planned Friday without you.</p>
+      <p>You know what I keep thinking about? The small things. The way you laugh. The way a random Tuesday with you is better than a planned Friday without you.</p>
       <p style="margin-top:1rem;">I'm really glad that reply happened. 🌸</p>
-      <p style="margin-top:1rem;">— Shashank</p>
+      <p style="margin-top:1rem;">Shashank</p>
     </div>
   </div>
 </div>
 
-<!-- ░░░ CANDLES ░░░ -->
+<!-- CANDLES -->
 <div id="candles">
   <div class="inner">
     <p class="section-label reveal">make a wish</p>
     <h2 class="candles-heading reveal">Blow out your candles 🎂</h2>
-    <p class="candles-sub reveal">Tap each flame to blow it out — all 25 of them 🕯️</p>
+    <p class="candles-sub reveal">Tap each flame to blow it out. All 25 of them 🕯️</p>
     <div class="candles-wrap" id="candles-wrap"></div>
     <p class="candles-count" id="candles-count">25 candles still burning ✨</p>
+    <button class="blow-all-btn" id="blow-all-btn" onclick="blowAllCandles()">blow them all out 💨</button>
     <div class="candles-wish" id="candles-wish">
-      <p>🎉 You did it! All 25 candles — blown out!<br><br>
+      <p>🎉 You did it! All 25 candles blown out!<br><br>
       Now close your eyes and make a wish, Tanisha.<br>
       Whatever it is, I hope it comes true. 🌸<br><br>
       Happy Birthday. 🎂</p>
     </div>
   </div>
 </div>
-<canvas class="confetti-burst" id="confetti-canvas"></canvas>
+<canvas class="confetti-canvas" id="confetti-canvas"></canvas>
 
-<!-- ░░░ MUSIC SECTION ░░░ -->
+<!-- MUSIC SECTION -->
 <div id="music-section">
   <p class="section-label reveal">our song</p>
   <h2 class="music-heading reveal">Bairan</h2>
-  <p class="music-sub reveal">— Banjaare —</p>
+  <p class="music-sub reveal">Banjaare</p>
   <div class="music-embed reveal">
     <iframe
       src="https://www.youtube.com/embed/oafxkMv4xnc?rel=0&modestbranding=1"
       height="300"
       allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-      allowfullscreen title="Bairan - Banjaare">
+      allowfullscreen title="Bairan by Banjaare">
     </iframe>
   </div>
   <p class="closing reveal">
@@ -683,38 +678,28 @@ const audio = document.getElementById('bg-audio');
 const toast = document.getElementById('music-toast');
 const btn   = document.getElementById('music-btn');
 const icon  = document.getElementById('music-icon');
-let musicStarted = false;
-let musicPlaying = false;
-
-// Replace with a gentle happy birthday instrumental URL if you have one
-// Using a placeholder — swap audio src in the <audio> tag with your chosen MP3
+let musicStarted = false, musicPlaying = false;
 
 function startMusic() {
-  if (!musicStarted) {
-    audio.volume = 0.25;
-    audio.play().then(() => {
-      musicStarted = true;
-      musicPlaying = true;
-      icon.textContent = '🔊';
-      toast.classList.add('hidden');
-      setTimeout(() => toast.style.display='none', 700);
-    }).catch(() => {});
-  }
+  if (musicStarted) return;
+  audio.volume = 0.22;
+  audio.play().then(() => {
+    musicStarted = true; musicPlaying = true;
+    icon.textContent = '🔊';
+    toast.classList.add('hidden');
+    setTimeout(() => toast.style.display = 'none', 700);
+  }).catch(() => {});
 }
 
 function toggleMusic() {
   if (!musicStarted) { startMusic(); return; }
-  if (musicPlaying) {
-    audio.pause(); musicPlaying = false; icon.textContent = '🔇';
-  } else {
-    audio.play(); musicPlaying = true; icon.textContent = '🔊';
-  }
+  if (musicPlaying) { audio.pause(); musicPlaying = false; icon.textContent = '🔇'; }
+  else              { audio.play();  musicPlaying = true;  icon.textContent = '🔊'; }
 }
 
 document.body.addEventListener('click', function onFirstTap(e) {
-  if (e.target.id === 'music-btn' || e.target.id === 'music-icon') return;
+  if (e.target.closest('#music-btn')) return;
   startMusic();
-  document.body.removeEventListener('click', onFirstTap);
 }, { once: true });
 
 btn.addEventListener('click', toggleMusic);
@@ -736,30 +721,42 @@ class Petal {
   draw() {
     ctx.save(); ctx.translate(this.x,this.y); ctx.rotate(this.rot);
     ctx.globalAlpha=this.alpha; ctx.fillStyle=`hsl(${this.hue},75%,87%)`;
-    ctx.beginPath(); ctx.ellipse(0,0,this.r,this.r*0.5,0,0,Math.PI*2); ctx.fill(); ctx.restore();
+    ctx.beginPath(); ctx.ellipse(0,0,this.r,this.r*0.5,0,0,Math.PI*2);
+    ctx.fill(); ctx.restore();
   }
   update() {
     this.y+=this.speed; this.x+=this.drift; this.rot+=this.dRot;
     if(this.y>H+20) this.reset();
   }
 }
-function init(){ resize(); petals=Array.from({length:50},()=>new Petal()); }
-function loop(){ ctx.clearRect(0,0,W,H); petals.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loop); }
-window.addEventListener('resize',resize); init(); loop();
+function initPetals(){ resize(); petals=Array.from({length:50},()=>new Petal()); }
+function loopPetals(){ ctx.clearRect(0,0,W,H); petals.forEach(p=>{p.update();p.draw();}); requestAnimationFrame(loopPetals); }
+window.addEventListener('resize', resize);
+initPetals(); loopPetals();
 
 /* ── SCROLL REVEAL ── */
 const obs = new IntersectionObserver(entries=>{
-  entries.forEach(e=>{ if(e.isIntersecting){e.target.classList.add('visible');obs.unobserve(e.target);} });
+  entries.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('visible'); obs.unobserve(e.target); } });
 },{threshold:0.12});
 document.querySelectorAll('.reveal,.tl-item,.reason-card').forEach(el=>obs.observe(el));
 
-/* ── STAT CARDS REVEAL + COUNT UP ── */
+/* ── STAT COUNTER ── */
+function daysSince(dateStr){
+  const start = new Date(dateStr);
+  const now   = new Date();
+  start.setHours(0,0,0,0); now.setHours(0,0,0,0);
+  return Math.floor((now - start) / (1000*60*60*24));
+}
+
 const statObs = new IntersectionObserver(entries=>{
   entries.forEach(e=>{
     if(e.isIntersecting){
       e.target.classList.add('visible');
       const num = e.target.querySelector('.stat-num');
-      if(num){ countUp(num, parseInt(num.dataset.target)); }
+      if(num){
+        const target = num.dataset.since ? daysSince(num.dataset.since) : parseInt(num.dataset.target);
+        countUp(num, target);
+      }
       statObs.unobserve(e.target);
     }
   });
@@ -767,13 +764,12 @@ const statObs = new IntersectionObserver(entries=>{
 document.querySelectorAll('.stat-card').forEach(el=>statObs.observe(el));
 
 function countUp(el, target){
-  let start=0; const dur=1200; const step=16;
-  const inc=target/(dur/step);
-  const timer=setInterval(()=>{
-    start=Math.min(start+inc, target);
-    el.textContent=Math.floor(start);
-    if(start>=target){ el.textContent=target; clearInterval(timer); }
-  },step);
+  let v=0; const dur=1400, step=16, inc=target/(dur/step);
+  const t=setInterval(()=>{
+    v=Math.min(v+inc, target);
+    el.textContent=Math.floor(v);
+    if(v>=target){ el.textContent=target; clearInterval(t); }
+  }, step);
 }
 
 /* ── SECRET MESSAGE ── */
@@ -781,91 +777,91 @@ function openSecret(){
   const lock=document.getElementById('lock-emoji');
   const msg=document.getElementById('secret-msg');
   const hint=document.getElementById('lock-hint');
-  if(msg.classList.contains('open')){ return; }
-  lock.textContent='🔓';
-  lock.style.animation='none';
-  hint.style.display='none';
-  msg.classList.add('open');
+  if(msg.classList.contains('open')) return;
+  lock.textContent='🔓'; lock.style.animation='none';
+  hint.style.display='none'; msg.classList.add('open');
 }
-  /* ── CANDLES ── */
-const candlesWrap = document.getElementById("candles-wrap");
-const candlesCount = document.getElementById("candles-count");
-const candlesWish = document.getElementById("candles-wish");
 
-const totalCandles = 25;
-let blownCount = 0;
+/* ── CANDLES ── */
+const TOTAL = 25;
+let blown = 0;
+const wrap   = document.getElementById('candles-wrap');
+const counter= document.getElementById('candles-count');
+const wish   = document.getElementById('candles-wish');
+const blowBtn= document.getElementById('blow-all-btn');
 
-for (let i = 1; i <= totalCandles; i++) {
-  const candle = document.createElement("div");
-  candle.className = "candle";
+// Build candles
+for(let i=1; i<=TOTAL; i++){
+  const c = document.createElement('div');
+  c.className = 'candle';
+  c.innerHTML = `<span class="flame">🔥</span><span class="candle-body">🕯️</span><span class="candle-num">${i}</span>`;
+  c.addEventListener('click', () => blowOne(c));
+  wrap.appendChild(c);
+}
 
-  candle.innerHTML = `
-    <div class="flame">🔥</div>
-    <div class="candle-body">🕯️</div>
-  `;
+// Show "blow all" button after 5 candles blown
+function updateCounter(){
+  const rem = TOTAL - blown;
+  if(rem > 0){
+    counter.textContent = `${rem} candle${rem===1?'':'s'} still burning ✨`;
+    if(blown >= 5) blowBtn.classList.add('visible');
+  } else {
+    counter.textContent = 'All candles blown out 🎉';
+    blowBtn.classList.remove('visible');
+    wish.classList.add('show');
+    wish.scrollIntoView({behavior:'smooth', block:'nearest'});
+    burstConfetti();
+  }
+}
 
-  candle.addEventListener("click", () => {
-    if (candle.classList.contains("blown")) return;
+function blowOne(c){
+  if(c.classList.contains('blown')) return;
+  c.classList.add('blown');
+  blown++;
+  updateCounter();
+}
 
-    candle.classList.add("blown");
-    blownCount++;
-
-    const remaining = totalCandles - blownCount;
-
-    if (remaining > 0) {
-      candlesCount.textContent =
-        `${remaining} candle${remaining === 1 ? "" : "s"} still burning ✨`;
-    } else {
-      candlesCount.textContent = "All candles blown out 🎉";
-      candlesWish.classList.add("show");
-      burstConfetti();
-    }
+function blowAllCandles(){
+  document.querySelectorAll('.candle:not(.blown)').forEach(c => {
+    setTimeout(() => blowOne(c), Math.random()*600);
   });
-
-  candlesWrap.appendChild(candle);
 }
-
 
 /* ── CONFETTI ── */
-function burstConfetti() {
-  const canvas = document.getElementById("confetti-canvas");
-  const ctx = canvas.getContext("2d");
+function burstConfetti(){
+  const cc = document.getElementById('confetti-canvas');
+  const cx = cc.getContext('2d');
+  cc.width = window.innerWidth;
+  cc.height = window.innerHeight;
 
-  canvas.width = window.innerWidth;
-  canvas.height = window.innerHeight;
+  const colors = ['#E8C4D4','#B07A96','#6B4F6B','#F7E6F0','#C9A96E','#fff'];
+  let pieces = Array.from({length:220}, () => ({
+    x: Math.random()*cc.width,
+    y: Math.random()*cc.height*0.4 - cc.height*0.1,
+    dx: (Math.random()-0.5)*8,
+    dy: Math.random()*-6 - 2,
+    size: Math.random()*8+3,
+    color: colors[Math.floor(Math.random()*colors.length)],
+    rot: Math.random()*360,
+    drot: (Math.random()-0.5)*6,
+    shape: Math.random()>0.5?'rect':'circle'
+  }));
 
-  let pieces = [];
-
-  for (let i = 0; i < 200; i++) {
-    pieces.push({
-      x: canvas.width / 2,
-      y: canvas.height / 2,
-      dx: (Math.random() - 0.5) * 12,
-      dy: Math.random() * -12 - 4,
-      size: Math.random() * 7 + 3,
-      hue: Math.random() * 360
+  let frame=0;
+  function animate(){
+    cx.clearRect(0,0,cc.width,cc.height);
+    pieces.forEach(p=>{
+      p.x+=p.dx; p.y+=p.dy; p.dy+=0.12; p.rot+=p.drot;
+      cx.save(); cx.translate(p.x,p.y); cx.rotate(p.rot*Math.PI/180);
+      cx.fillStyle=p.color;
+      if(p.shape==='circle'){ cx.beginPath(); cx.arc(0,0,p.size/2,0,Math.PI*2); cx.fill(); }
+      else { cx.fillRect(-p.size/2,-p.size/4,p.size,p.size/2); }
+      cx.restore();
     });
+    frame++;
+    if(frame<200) requestAnimationFrame(animate);
+    else cx.clearRect(0,0,cc.width,cc.height);
   }
-
-  function animate() {
-    ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-    pieces.forEach(p => {
-      p.x += p.dx;
-      p.y += p.dy;
-      p.dy += 0.15;
-
-      ctx.fillStyle = `hsl(${p.hue},90%,60%)`;
-      ctx.fillRect(p.x, p.y, p.size, p.size);
-    });
-
-    if (pieces.some(p => p.y < canvas.height + 50)) {
-      requestAnimationFrame(animate);
-    } else {
-      ctx.clearRect(0, 0, canvas.width, canvas.height);
-    }
-  }
-
   animate();
 }
 </script>
