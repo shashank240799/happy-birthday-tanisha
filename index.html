@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Happy Birthday, Tanisha 🌸</title>
+  <title>Happy Birthday, Tanisha 👸🏻</title>
   <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garant:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
@@ -26,7 +26,6 @@
       cursor: default;
     }
 
-    /* ── MUSIC TOAST ── */
     #music-toast {
       position: fixed;
       bottom: 1.4rem;
@@ -47,7 +46,6 @@
     }
     #music-toast.hidden { opacity: 0; }
 
-    /* ── FLOATING MUSIC BTN ── */
     #music-btn {
       position: fixed;
       bottom: 1.4rem;
@@ -65,7 +63,6 @@
     #music-btn:hover { transform: scale(1.08); }
     #music-btn .note { font-size: 18px; }
 
-    /* ── HERO ── */
     #hero {
       position: relative;
       min-height: 100svh;
@@ -100,12 +97,12 @@
       color: var(--mauve); margin-top: 0.6rem;
       opacity: 0; animation: fadeUp 1s 1.1s forwards;
     }
-    .tap-hint {
+    .-hint {
       margin-top: 2rem; font-size: 0.7rem; letter-spacing: 0.22em;
       text-transform: uppercase; color: var(--mauve); opacity: 0;
       animation: fadeUp 1s 1.6s forwards;
     }
-    .tap-hint span { display: block; font-size: 1.2rem; margin-bottom: 0.3rem; animation: bounce 2s infinite; }
+    .-hint span { display: block; font-size: 1.2rem; margin-bottom: 0.3rem; animation: bounce 2s infinite; }
     @keyframes bounce { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-5px)} }
     .hero-scroll {
       position: absolute; bottom: 2rem;
@@ -182,7 +179,6 @@
     }
     .stat-emoji { font-size: 1.2rem; display: block; margin-bottom: 0.4rem; }
 
-    /* ── TIMELINE ── */
     #timeline { background: var(--fill); padding: 5rem 1.5rem; }
     #timeline .inner { max-width: 660px; margin: 0 auto; }
     .timeline-heading {
@@ -303,7 +299,7 @@
       font-size: 3.5rem; cursor: pointer;
       animation: pulse 2s infinite;
       display: inline-block; user-select:none;
-      -webkit-tap-highlight-color: transparent;
+      -webkit--highlight-color: transparent;
     }
     @keyframes pulse { 0%,100%{transform:scale(1)} 50%{transform:scale(1.12)} }
     .secret-hint {
@@ -342,7 +338,7 @@
       display: flex; flex-direction: column;
       align-items: center; cursor: pointer;
       user-select: none; transition: transform 0.15s;
-      -webkit-tap-highlight-color: transparent;
+      -webkit--highlight-color: transparent;
       width: 36px;
     }
     .candle:active { transform: scale(0.88); }
@@ -444,7 +440,7 @@
 <audio id="bg-audio" loop>
   <source src="music.mp3" type="audio/mpeg" />
 </audio>
-<div id="music-toast">🎵 Tap anywhere to start the music</div>
+<div id="music-toast">🎵 Tap anywhere to play music</div>
 <button id="music-btn" title="Toggle music" aria-label="Toggle music">
   <span class="note" id="music-icon">🎵</span>
 </button>
@@ -474,13 +470,15 @@
 
   <p>And then there are all the moments that I find myself revisiting without even realizing it. Our first trip to Vrindavan on April 3rd, our countless little dates, and how no matter how many times we've met, I still find myself looking forward to seeing you again. Somehow, even the simplest moments with you end up becoming some of my favorite memories. They're the kind of thoughts that randomly cross my mind and always leave me smiling.</p>
 
-  <p>I hope today brings you everything your heart desires, because you deserve so much happiness, laughter, love, and all the beautiful things life has to offer. And selfishly, I just wish I could be there beside you today.</p>
+  <p>I hope today brings you everything your heart desires, because you deserve so much happiness, laughter, love, and all the beautiful things life has to offer.</p>
 
   <p>Happy Birthday, Tanisha. ❤️</p>
 
-  <p>Thank you for being exactly who you are. Thank you for all the little moments, the laughs, the memories, and for making life feel a little softer and a lot more beautiful.</p>
+  <p>Thank you for being exactly who you are. Thank you for all the little moments, the laughs, the memories, and for making life feel a little softer and a lot more beautiful.💕</p>
 
-  <p>Here's to more coffee dates, more adventures, more random conversations, and making many more beautiful memories together. ❤️</p>
+  <p>Here's to more coffee dates, more adventures, more random conversations, and making many more beautiful memories together.❤️</p>
+
+  <p>Most of all, here's to you, the amazing person you are today and to everything that's waiting for you in the year ahead.🫶🏻</p>
 
   <p>I hope you have the happiest birthday, pretty girl. 🎂✨🤍</p>
 </div>
@@ -547,7 +545,7 @@
       <div class="tl-item">
         <p class="tl-date">25 April 2026</p>
         <p class="tl-title">Our First Kiss 🌸</p>
-        <p class="tl-desc">Some moments you want to freeze forever. This was one of them.</p>
+        <p class="tl-desc">Some moments you want to freeze forever. That was one of them.</p>
       </div>
       <div class="tl-item">
         <p class="tl-date">Always</p>
@@ -597,7 +595,7 @@
 <div id="reasons">
   <div class="inner">
     <p class="section-label reveal" style="text-align:center;">just a few things</p>
-    <h2 class="reasons-heading reveal">Why I like you 🌸</h2>
+    <h2 class="reasons-heading reveal">What I admire 🌸</h2>
     <div class="reasons-grid">
       <div class="reason-card">
         <span class="reason-emoji">🏋️‍♀️</span>
@@ -636,7 +634,7 @@
     <div class="secret-lock" id="lock-emoji" onclick="openSecret()">🔒</div>
     <p class="secret-hint" id="lock-hint">tap to unlock</p>
     <div class="secret-message" id="secret-msg">
-      <p>You know what I keep thinking about? The small things. The way you laugh. The way a random Tuesday with you is better than a planned Friday without you.</p>
+      <p>You know what I keep thinking about? The small things. The way you laugh, the way you say "Bohot maarungi"😛 .The way a random Wednesday with you is better than a Friday without you.</p>
       <p style="margin-top:1rem;">I'm really glad that reply happened. 🌸</p>
       <p style="margin-top:1rem;">Shashank</p>
     </div>
@@ -654,7 +652,7 @@
     <button class="blow-all-btn" id="blow-all-btn" onclick="blowAllCandles()">blow them all out 💨</button>
     <div class="candles-wish" id="candles-wish">
       <p>🎉 You did it! All 25 candles blown out!<br><br>
-      Now close your eyes and make a wish, Tanisha.<br>
+      Now close your eyes and make a wish.<br>
       Whatever it is, I hope it comes true. 🌸<br><br>
       Happy Birthday. 🎂</p>
     </div>
